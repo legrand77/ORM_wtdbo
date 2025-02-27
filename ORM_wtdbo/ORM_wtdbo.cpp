@@ -29,7 +29,7 @@ public:
 };
 class Stock {
 public:
-	string count = "";//
+	string count = "";
 	Wt::Dbo::ptr<Book> book;
 	Wt::Dbo::ptr<Shop> shop;
 	Wt::Dbo::collection< Wt::Dbo::ptr<Sale> > sale;
@@ -46,9 +46,9 @@ public:
 class Sale {
 public:
 
-	string price = "";//
-	string date_sale = "";//
-	string count = "";//
+	string price = "";
+	string date_sale = "";
+	string count = "";
 	Wt::Dbo::ptr<Stock> stock;
 
 	template<class Action>
@@ -62,7 +62,7 @@ public:
 };
 class Publisher {
 public:
-	string name = "";//
+	string name = "";
     Wt::Dbo::collection<Wt::Dbo::ptr<Book>> books;
 
 	template<class Action>
@@ -74,7 +74,7 @@ public:
 };
 class Shop {
 public:
-	string name = ""; //
+	string name = ""; 
 	Wt::Dbo::collection< Wt::Dbo::ptr<Stock> > stock;
 
 	template<class Action>
@@ -107,14 +107,14 @@ int main() {
 		session.mapClass<Shop>("shop");
 		session.mapClass<Sale>("sale");
 
-		vector<string> publisherName{"publisher_1", "publisher_2", "publisher_3", "publisher_4", "publisher_5"};              
+		vector<string> publisherName{"Pushkin", "Lermontov", "Dostoevsky", "Nekrasov", "Krylov"};              
 		vector<string> ShopName{ "Shop_1", "Shop_2", "Shop_3", "Shop_4", "Shop_5" };                   
 		vector<string> Saleprice{ "price_1", "price_2",  "price_3", "price_4", "price_5" };                       
 		vector<string> Saledate_sale{ "date_sale_1", "date_sale_2", "date_sale_3", "date_sale_4", "date_sale_5" };                     
 		vector<string> Salecount{ "salecount_1", "salecount_2", "salecount_3", "salecount_4", "salecount_5" };					  
 		vector<string> Stockcount{ "stockcount_1", "stockcount_2", "stockcount_3", "stockcount_4", "stockcount_5" };					   
 		vector<string> Booktitle{ "book_1", "book_2", "book_3", "book_4", "book_5" };					   
-		vector<string> publisherName_1{ "publisher_1", "publisher_1", "publisher_2", "publisher_2", "publisher_3" };
+		vector<string> publisherName_1{ "Pushkin", "Pushkin", "Lermontov", "Lermontov", "Dostoevsky" };
 		
 		int op = -1;
 	   
@@ -175,11 +175,10 @@ int main() {
 						 cin >> x;
 						 y = stoi(x);
 						 if (y<1 || y>5 ) break;
-						 Wt::Dbo::ptr<Publisher> publisher = session.find<Publisher>().where("name = ?").bind(publisherName[y-1]);
 						 Wt::Dbo::collection<Wt::Dbo::ptr<Sale>> sale = session.find<Sale>().orderBy("stock_id");
 						 for (const Wt::Dbo::ptr<Sale>& sale : sale)
 						 {
-							 if (sale->stock->book->publishers == publisher) 
+							 if (sale->stock->book->publishers->name == publisherName[y - 1])
 							 cout << sale->stock->shop->name << endl;
 						 }
 						 transaction.commit();
