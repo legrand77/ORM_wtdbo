@@ -159,7 +159,6 @@ int main() {
 						   sale.modify()->date_sale = Saledate_sale[i];
 						   sale.modify()->count = Salecount[i];
 						   sale.modify()->stock = stock1;
-
 					   }
                        transaction.commit();
 					   break;
@@ -175,11 +174,11 @@ int main() {
 						 cin >> x;
 						 y = stoi(x);
 						 if (y<1 || y>5 ) break;
-						 Wt::Dbo::collection<Wt::Dbo::ptr<Sale>> sale = session.find<Sale>().orderBy("stock_id");
-						 for (const Wt::Dbo::ptr<Sale>& sale : sale)
+						 Wt::Dbo::collection<Wt::Dbo::ptr<Stock>> stock = session.find<Stock>().orderBy("id");
+						 for (const Wt::Dbo::ptr<Stock>& stock : stock)
 						 {
-							 if (sale->stock->book->publishers->name == publisherName[y - 1])
-							 cout << sale->stock->shop->name << endl;
+							 if (stock->book->publishers->name == publisherName[y - 1])
+							 cout << stock->shop->name << endl;
 						 }
 						 transaction.commit();
 					    break;
